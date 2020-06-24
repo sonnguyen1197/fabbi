@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import './index.css';
+import '../index.css'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Redirect } from 'react-router-dom';
 const layout = {
@@ -25,25 +25,29 @@ const account = {
 class LoginComponent extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            islogin: JSON.parse(localStorage.getItem('auth'))
+            login: false
         }
+    }
+    componentDidMount() {
+        let auth = localStorage.getItem("auth") ? JSON.parse(localStorage.getItem("auth")) : false;
+        console.log(auth)
+        this.setState({ login: auth })
     }
     onFinish = values => {
         if (account.username === values.username && account.password === values.password) {
-            console.log(this.state)
-            localStorage.setItem('auth', true)
-            this.setState({ islogin: true })
+            localStorage.setItem('auth', true);
+            this.setState({ login: true })
         }
     };
     onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
     render() {
-        const { islogin } = this.state;
-        console.log(this.state)
-        if (islogin === false) {
+        const { login } = this.state;
+        // console.log(login)
+        if (login !== true) {
             return (
                 <div className="container login-home">
                     <Form
@@ -89,7 +93,7 @@ class LoginComponent extends Component {
                             <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>
-                            {islogin === true ? <Redirect to='/home' /> : null}
+                            {login === true ? <Redirect to='/home' /> : null}
                         </Form.Item>
                     </Form>
                 </div>

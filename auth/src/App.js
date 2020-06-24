@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-
-import Login from './Login'
-import Home from './home'
+import PrivateRoute from './components/PrivateRoute'
+import Login from './components/Login'
+import Home from './components/Home'
 export default class Routes extends Component {
     render() {
         return (
             <BrowserRouter>
                 <Switch>
                     <Route exact path='/login' component={Login} />
-                    <Route exact path='/home' component={Home} />
-                    {/* <Route component={NotFound} /> */}
+                    <PrivateRoute exact path='/home' component={Home} />
                 </Switch>
             </BrowserRouter>
         );
